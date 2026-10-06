@@ -1,18 +1,17 @@
 # Vendored libraries
 
-This repo vendors the exact Arduino library sources used to build `Tally_LVGL`, taken from the
+This repo vendors the exact Arduino library sources used to build `Tally` (the pre-LVGL version, see the `main` branch for the LVGL rewrite), taken from the
 local Arduino `libraries/` sketchbook folder that was actually used to compile and flash the device.
 They're included (rather than just listed as dependencies) because at least one of them contains a
 local patch that is required for the project to compile — see below.
 
 To keep the repo small, non-essential bulk (bundled examples, demos, datasheets, docs, test suites)
 was stripped from each library; only the source needed to build is kept. `SensorLib`, which was
-present in the original Arduino libraries folder but is not referenced anywhere by `Tally_LVGL.ino`,
+present in the original Arduino libraries folder but is not referenced anywhere by `Tally.ino`,
 was left out entirely.
 
 | Library | `library.properties` version | Path |
 |---|---|---|
-| lvgl | 8.4.0 | `libraries/lvgl` |
 | GFX Library for Arduino | 1.6.4 (patched, see below) | `libraries/GFX_Library_for_Arduino` |
 | Arduino_DriveBus | 1.0.1 | `libraries/Arduino_DriveBus` |
 | XPowersLib | 0.2.6 (header) | `libraries/XPowersLib` |
@@ -35,7 +34,6 @@ modifications:
   correctly against ESP32 Arduino core 3.3.6+**. If you install the stock v1.6.4 release from the
   Library Manager instead of using the vendored copy, the sketch will fail to build on core 3.3.6+
   with a `spiFrequencyToClockDiv` signature mismatch.
-- **lvgl** — byte-for-byte identical to the official [v8.4.0 tag](https://github.com/lvgl/lvgl/tree/v8.4.0) `src/` (aside from the bundled `demos` module, which isn't used by this sketch).
 - **Adafruit_BusIO** — identical to the official [1.17.4 tag](https://github.com/adafruit/Adafruit_BusIO/tree/1.17.4).
 - **Adafruit_XCA9554** — identical to the upstream [Adafruit_XCA9554](https://github.com/adafruit/Adafruit_XCA9554) repo.
 - **XPowersLib** — not a modification, but newer than the `0.2.6` tag: the vendored copy already
