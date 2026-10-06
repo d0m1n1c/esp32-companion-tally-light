@@ -26,16 +26,21 @@ percentage/charging status is also shown via the onboard AXP2101 PMIC.
 
 ## Required libraries
 
-Install these via the Arduino Library Manager / Boards Manager (versions this project was built and
-tested against):
+This repo **vendors the exact library sources** used to build the project, under [libraries/](libraries),
+because one of them (`GFX_Library_for_Arduino`) contains a local patch required to compile against
+newer ESP32 Arduino cores. See [LIBRARIES.md](LIBRARIES.md) for the full breakdown of what's vendored
+and how each library was verified against its public upstream release.
 
-| Library | Version |
-|---|---|
-| [lvgl](https://github.com/lvgl/lvgl) | 8.4.0 |
-| [GFX Library for Arduino](https://github.com/moononournation/Arduino_GFX) | 1.6.4 |
-| [Arduino_DriveBus](https://github.com/espressif/Arduino_DriveBus) | 1.0.1 |
-| [XPowersLib](https://github.com/lewisxhe/XPowersLib) | 0.2.6 |
-| ESP32 Arduino core | tested with the Waveshare ESP32-S3 board package |
+| Library | Version | Notes |
+|---|---|---|
+| [lvgl](https://github.com/lvgl/lvgl) | 8.4.0 | unmodified |
+| [GFX Library for Arduino](https://github.com/moononournation/Arduino_GFX) | 1.6.4 | **locally patched**, see [LIBRARIES.md](LIBRARIES.md) |
+| [Arduino_DriveBus](https://github.com/espressif/Arduino_DriveBus) | 1.0.1 | Waveshare/author-distributed |
+| [XPowersLib](https://github.com/lewisxhe/XPowersLib) | 0.2.6 | newer than the tag, unmodified |
+| [Adafruit_XCA9554](https://github.com/adafruit/Adafruit_XCA9554) | 1.0.0 | unmodified |
+| [Adafruit_BusIO](https://github.com/adafruit/Adafruit_BusIO) | 1.17.4 | unmodified |
+| [base64](https://github.com/Densaugeo/base64_arduino) | 1.3.0 | unmodified |
+| ESP32 Arduino core | tested with the Waveshare ESP32-S3 board package (3.3.6+) | |
 
 Also requires the board's `pin_config.h` (included in this repo under `Tally_LVGL/`), which defines
 the display/touch/I2S/SD pin mappings for this specific board.
@@ -48,7 +53,9 @@ the display/touch/I2S/SD pin mappings for this specific board.
 1. Open `Tally_LVGL/Tally_LVGL.ino` in the Arduino IDE.
 2. Select the appropriate ESP32-S3 board profile for the Waveshare ESP32-S3-Touch-AMOLED-1.8
    (PSRAM enabled, USB CDC on boot enabled).
-3. Install the libraries listed above.
+3. Copy the folders under [libraries/](libraries) into your Arduino sketchbook's `libraries/`
+   directory (recommended, to get the exact vendored/patched versions — see
+   [LIBRARIES.md](LIBRARIES.md)), or install the libraries listed above via the Library Manager.
 4. Flash the sketch.
 5. Open the serial monitor at 115200 baud and configure the device:
 
